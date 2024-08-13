@@ -5,6 +5,7 @@ import './App.css'
 
 export default function Home() {
   const [count, setCount] = useState(0)
+  const [receivedMessage, setReceivedMessage] = useState<string>('');
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   // Enviar datos al iframe cuando count cambie
@@ -13,6 +14,28 @@ export default function Home() {
       iframeRef.current.contentWindow?.postMessage({ count }, '*');
     }
   }, [count]);
+    // Manejar mensajes recibidos
+    useEffect(() => {
+      const handleMessage = (event: MessageEvent) => {
+        // Verifica que el mensaje proviene del dominio esperado
+        if (event.origin !== 'https://main.d2pafslliiho2h.amplifyapp.com') return;
+  
+        // Procesa el mensaje
+        const { message } = event.data;
+        if (typeof message === 'string') {
+          console.log('Message received from iframe:', message);
+          setReceivedMessage(message);
+        }
+      };
+  
+      // Escucha el evento de mensaje
+      window.addEventListener('message', handleMessage);
+  
+      // Limpieza cuando el componente se desmonte
+      return () => {
+        window.removeEventListener('message', handleMessage);
+      };
+    }, []);
   return (
     <>
       <div>
@@ -30,6 +53,9 @@ export default function Home() {
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+        <p>
+          Message from iframe: {receivedMessage}
         </p>
       </div>
       <p className="read-the-docs">
