@@ -28,6 +28,11 @@ export default function Home() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <iframe 
+        src="https://main.d2pafslliiho2h.amplifyapp.com" 
+        style={{ width: '100%', height: '100vh', border: 'none' }} 
+        title="Microfront-2"
+      />
     </>
   )
 }
