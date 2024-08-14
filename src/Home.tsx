@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Navbar from './components/Navbar/Navbar'
 
 export default function Home() {
   const [count, setCount] = useState(0)
@@ -38,6 +39,7 @@ export default function Home() {
     }, []);
   return (
     <>
+      <Navbar/>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
